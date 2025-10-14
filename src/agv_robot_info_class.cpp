@@ -16,7 +16,7 @@ public:
     msg.data_field_04 = "firmware_version: " + firmware_version;
     msg.data_field_05 = "maximum_payload: " + std::to_string(maximum_payload) + " Kg";
 
-    // Fill remaining fields empty
+    // Extra fields
     msg.data_field_06 = "";
     msg.data_field_07 = "";
     msg.data_field_08 = "";

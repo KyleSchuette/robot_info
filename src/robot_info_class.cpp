@@ -14,7 +14,7 @@ void RobotInfo::publish_data() {
   msg.data_field_03 = "ip_address: " + ip_address;
   msg.data_field_04 = "firmware_version: " + firmware_version;
 
-  // Leave the rest empty
+  // Extra fields
   msg.data_field_05 = "";
   msg.data_field_06 = "";
   msg.data_field_07 = "";
