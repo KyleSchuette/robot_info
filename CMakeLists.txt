@@ -10,6 +10,7 @@ project(robot_info)
 find_package(catkin REQUIRED COMPONENTS
   robotinfo_msgs
   roscpp
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -104,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES robot_info
-#  CATKIN_DEPENDS robotinfo_msgs roscpp
+ CATKIN_DEPENDS robotinfo_msgs roscpp std_msgs
 #  DEPENDS system_lib
 )
 
@@ -115,8 +116,18 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+)
+
+add_executable(robot_info_node
+  src/robot_info_main.cpp
+  src/robot_info_class.cpp
+)
+
+add_executable(agv_robot_info_node
+  src/agv_robot_info_class.cpp
+  src/robot_info_class.cpp
 )
 
 ## Declare a C++ library
@@ -145,9 +156,13 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(${PROJECT_NAME}_node
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(agv_robot_info_node
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
