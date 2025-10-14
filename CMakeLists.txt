@@ -128,6 +128,7 @@ add_executable(robot_info_node
 add_executable(agv_robot_info_node
   src/agv_robot_info_class.cpp
   src/robot_info_class.cpp
+  src/hydraulic_system_monitor.cpp
 )
 
 ## Declare a C++ library

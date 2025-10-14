@@ -1,9 +1,10 @@
 #include "robot_info/robot_info.h"
-#include "robotinfo_msgs/RobotInfo10Fields.h"
+#include "hydraulic_system_monitor.cpp"
 
 class AGVRobotInfo : public RobotInfo {
 public:
   float maximum_payload;
+  HydraulicSystemMonitor hydraulic_monitor;  // composition
 
   AGVRobotInfo() : maximum_payload(0.0f) {}
 
@@ -16,21 +17,26 @@ public:
     msg.data_field_04 = "firmware_version: " + firmware_version;
     msg.data_field_05 = "maximum_payload: " + std::to_string(maximum_payload) + " Kg";
 
+    // Values from HydraulicSystemMonitor object
+    msg.data_field_06 = "hydraulic_oil_temperature: " + hydraulic_monitor.getHydraulicOilTemperature();
+    msg.data_field_07 = "hydraulic_oil_tank_fill_level: " + hydraulic_monitor.getHydraulicOilTankFillLevel();
+    msg.data_field_08 = "hydraulic_oil_pressure: " + hydraulic_monitor.getHydraulicOilPressure();
+
     // Extra fields
-    msg.data_field_06 = "";
-    msg.data_field_07 = "";
-    msg.data_field_08 = "";
     msg.data_field_09 = "";
     msg.data_field_10 = "";
 
     info_pub_.publish(msg);
 
-    ROS_INFO_STREAM("[AGVRobotInfo] Published: "
-                    << msg.data_field_01 << " | "
-                    << msg.data_field_02 << " | "
-                    << msg.data_field_03 << " | "
-                    << msg.data_field_04 << " | "
-                    << msg.data_field_05);
+    ROS_INFO_STREAM("[AGVRobotInfo] Published:\n"
+                    << msg.data_field_01 << "\n"
+                    << msg.data_field_02 << "\n"
+                    << msg.data_field_03 << "\n"
+                    << msg.data_field_04 << "\n"
+                    << msg.data_field_05 << "\n"
+                    << msg.data_field_06 << "\n"
+                    << msg.data_field_07 << "\n"
+                    << msg.data_field_08);
   }
 };
 
