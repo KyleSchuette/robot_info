@@ -1,5 +1,4 @@
 #include "robot_info/robot_info.h"
-#include "robotinfo_msgs/RobotInfo10Fields.h"
 
 class AGVRobotInfo : public RobotInfo {
 public:
@@ -14,7 +13,10 @@ public:
     msg.data_field_02 = "serial_number: " + serial_number;
     msg.data_field_03 = "ip_address: " + ip_address;
     msg.data_field_04 = "firmware_version: " + firmware_version;
-    msg.data_field_05 = "maximum_payload: " + std::to_string(maximum_payload) + " Kg";
+
+    // Convert to integer before output to avoid decimals
+    int payload_int = static_cast<int>(maximum_payload);
+    msg.data_field_05 = "maximum_payload: " + std::to_string(payload_int) + " Kg";
 
     // Extra fields
     msg.data_field_06 = "";
@@ -42,7 +44,7 @@ int main(int argc, char **argv) {
   agv.serial_number = "567A359";
   agv.ip_address = "169.254.5.180";
   agv.firmware_version = "3.5.8";
-  agv.maximum_payload = 100.0f;
+  agv.maximum_payload = 100;
 
   ros::Rate rate(1);
   while (ros::ok()) {
